@@ -2,7 +2,7 @@
 out_path <- "/Users/nishiokariku/Desktop/test"
 self_path <- "/Users/nishiokariku/Dropbox/Nishioka/Research/Code/R/Gene_analysis/module"
 
-
+print(22)
 
 
 # devtools::install_github("YuLab-SMU/clusterProfiler.dplyr")
