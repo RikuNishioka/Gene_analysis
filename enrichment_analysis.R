@@ -6,6 +6,7 @@ self_path <- "/Users/nishiokariku/Dropbox/Nishioka/Research/Code/R/Gene_analysis
 
 
 # devtools::install_github("YuLab-SMU/clusterProfiler.dplyr")
+library(renv)
 # library(msigdbr)
 library(clusterProfiler)
 library(DOSE)
