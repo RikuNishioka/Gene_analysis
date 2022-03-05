@@ -6,14 +6,16 @@ self_path <- "/Users/nishiokariku/Dropbox/Nishioka/Research/Code/R/Gene_analysis
 
 
 # devtools::install_github("YuLab-SMU/clusterProfiler.dplyr")
+# if (!require("BiocManager", quietly = TRUE))
+#   install.packages("BiocManager")
 library(renv)
-# library(msigdbr)
+library(msigdbr)
 library(clusterProfiler)
 library(DOSE)
 library(enrichplot)
-# library(forcats)
+library(forcats)
 library(ggplot2)
-# library(ggstance)
+library(ggridges)
 library(clusterProfiler.dplyr)
 
 
@@ -27,22 +29,25 @@ geneset_C5 <- msigdbr(species = "Homo sapiens", category = "C5") %>%
   dplyr::select(gs_name, entrez_gene)
 
 
+
+#GSEA_analysis
 result_gsea <- GSEA(geneList, TERM2GENE = geneset_C5)
-
-#ridgeplot
-ggsave(file=file.path(out_path, "ridgeplot.png"), plot=ridgeplot(result_gsea), width=14, height=20, limitsize=FALSE)
-
-#dotplot
-plot_dotplot = dotplot(result_gsea, showCategory = 10, font.size = 8,
-                       x = "GeneRatio",   # option -> c("GeneRatio", "Count")
-                       color = "p.adjust")   # option -> c("pvalue", "p.adjust", "qvalue")
-
-#GSEAplot
-visualize_gsea(result_gsea, number=5)
+GSEA_analysis(result_gsea, number=5)
 
 
+#Gene_
+geneList_name <- names(geneList)[abs(geneList) > 2]
+enrich_result <- enrichDGN(geneList_name)
 
 
+# #cneplot
+# p1 <- cnetplot(result_gsea, showCategory = (3*2), colorEdge = TRUE, node_label = "category")
+# cowplot::plot_grid(p1, ncol=1, labels=LETTERS[1], rel_widths=c(1))
 
+# #enrichment map
+# result_gsea_2 <- mutate(result_gsea, ordering = abs(NES)) %>%
+#   arrange(desc(ordering)) 
+# p2 <- emapplot(result_gsea_2, showCategory = 10)
+# cowplot::plot_grid(p2, ncol = 1, lables = LETTERS[1])
 
 
