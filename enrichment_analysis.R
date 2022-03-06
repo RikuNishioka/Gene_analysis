@@ -39,6 +39,16 @@ GSEA_analysis(result_gsea, number=5)
 geneList_name <- names(geneList)[abs(geneList) > 2]
 enrich_result <- enrichDGN(geneList_name)
 
+## Gene-Concept Network ##
+## convert gene ID to Symbol
+edox <- setReadable(edo, 'org.Hs.eg.db', 'ENTREZID')
+p1 <- cnetplot(edox, foldChange=geneList)
+## categorySize can be scaled by 'pvalue' or 'geneNum'
+p2 <- cnetplot(edox, categorySize="pvalue", foldChange=geneList)
+p3 <- cnetplot(edox, foldChange=geneList, circular = TRUE, colorEdge = TRUE) 
+cowplot::plot_grid(p1, p2, p3, ncol=3, labels=LETTERS[1:3], rel_widths=c(.8, .8, 1.2))
+
+
 
 # #cneplot
 # p1 <- cnetplot(result_gsea, showCategory = (3*2), colorEdge = TRUE, node_label = "category")
